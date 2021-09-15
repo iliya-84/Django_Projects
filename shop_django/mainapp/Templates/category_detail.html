@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-5 row-cols-xl-5 justify-content-center">
+        <h3>{{ category_detail.name }}</h3>
+    </div>
+
+<nav aria-label="breadcrumb" class="pt-3"
+    style="margin-left: 50px; font-family: Helvetica; font-size:25pt; font-weight:bold">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'base' %}">Главная</a></li>
+        <li class="breadcrumb-item active" >{{ category_detail.name }}</li>
+    </ol>
+</nav>
+
+        {% for product in category_products %}
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <a href="{{ product.get_absolute_url }}"></a> <img class="card-img-top" src="{{ product.image.url }}" alt="..."/>
+                    <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                    <h5>{{ product.price }}</h5>
+                    <a href="{% url 'add_to_cart' ct_model=product.get_model_name slug=product.slug  %}">
+                        <button class="btn btn-danger">добавить в корзину</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+</div>
+
+{% endblock content %}
